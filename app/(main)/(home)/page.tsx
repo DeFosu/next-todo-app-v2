@@ -19,7 +19,7 @@ const Home = () => {
     const fetchTasks = async () => {
       try {
         const supabase = createClient();
-        const { data, error } = await supabase.from("tasks").select("*");
+        const { data, error } = await supabase.from("public_tasks").select("*");
 
         if (error) {
           console.error("Supabase error:", error);
@@ -27,7 +27,6 @@ const Home = () => {
           return;
         }
 
-        console.log("Fetched data:", data);
         setTasks(data);
       } catch (err) {
         console.error("Fetch error:", err);
@@ -41,7 +40,9 @@ const Home = () => {
     <section>
       <div className="container mx-auto py-4 px-2">
         <h1 className="text-2xl font-bold">Home</h1>
-        <h2 className="text-lg font-bold">Tasks {tasks?.length ?? 0}</h2>
+        <h2 className="text-lg font-bold">
+          Task of the day [{tasks?.length ?? 0}]
+        </h2>
         {error && <p className="text-red-500">{error}</p>}
         <ul className="space-y-2 mt-4">
           {tasks?.map((task) => (
