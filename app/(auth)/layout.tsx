@@ -1,11 +1,31 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
+import { useUser } from "@/store/useUser";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
-import React from "react";
+import { useRouter } from "next/navigation";
+import React, { useEffect } from "react";
 
-const AuthLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export default function AuthLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const router = useRouter();
+  const { user, loading } = useUser();
+
+  useEffect(() => {
+    if (user) {
+      router.replace("/");
+    }
+  }, [user, router]);
+
+  if (loading) return null;
+  if (user) return null;
+
   return (
-    <div className="min-w-screen min-h-screen flex items-center justify-center p-2 relative">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <Button variant="ghost" className="absolute top-4 left-4">
         <Link href="/" className="flex items-center gap-2">
           <ArrowLeft />
@@ -15,6 +35,4 @@ const AuthLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       {children}
     </div>
   );
-};
-
-export default AuthLayout;
+}

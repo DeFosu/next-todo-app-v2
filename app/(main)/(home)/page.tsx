@@ -1,5 +1,6 @@
 "use client";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useUser } from "@/store/useUser";
 import { createClient } from "@/utils/supabase/client";
 import React, { useLayoutEffect, useState } from "react";
 
